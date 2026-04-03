@@ -1,5 +1,5 @@
 // import FC from react
-import { type FC } from 'react';
+import { type FC, useState } from 'react';
 
 //import router
 import AppRoutes from './routes';
@@ -8,36 +8,77 @@ import AppRoutes from './routes';
 import { Link } from "react-router";
 
 const App: FC = () => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <div>
-      <nav className="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
-        <div className="container">
-          <Link to="/" className="navbar-brand">HOME</Link>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
+    <div className="min-h-screen bg-surface">
+      {/* Navbar */}
+      <nav className="glass sticky top-0 z-50 border-b border-border/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            {/* Logo */}
+            <Link
+              to="/"
+              className="flex items-center gap-2 text-xl font-bold bg-gradient-to-r from-primary-light to-accent bg-clip-text text-transparent hover:opacity-80 transition-opacity duration-300"
+            >
+              <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+              HOME
+            </Link>
+
+            {/* Desktop Menu */}
+            <div className="hidden md:flex items-center gap-4">
+              <a
+                href="https://astersybil.vercel.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 py-2 text-sm font-medium text-text-secondary hover:text-text-primary rounded-lg hover:bg-surface-elevated/50 transition-all duration-300"
+              >
+                Portfolio
+              </a>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden p-2 rounded-lg text-text-secondary hover:text-text-primary hover:bg-surface-elevated/50 transition-all duration-300"
+              aria-label="Toggle navigation"
+            >
+              {mobileMenuOpen ? (
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              ) : (
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              )}
+            </button>
+          </div>
+
+          {/* Mobile Menu */}
+          <div
+            className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+              mobileMenuOpen ? 'max-h-40 pb-4' : 'max-h-0'
+            }`}
           >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-              <li className="nav-item">
-                <a href="https://astersybil.vercel.app" target="_blank" className="nav-link active" aria-current="page">Portfolio</a>
-              </li>
-            </ul>
+            <a
+              href="https://astersybil.vercel.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block px-4 py-2 text-sm font-medium text-text-secondary hover:text-text-primary rounded-lg hover:bg-surface-elevated/50 transition-all duration-300"
+            >
+              Portfolio
+            </a>
           </div>
         </div>
       </nav>
 
-      <div className="container mt-5">
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <AppRoutes />
-      </div>
+      </main>
     </div>
   )
 }

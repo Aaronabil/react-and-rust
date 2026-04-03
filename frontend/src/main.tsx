@@ -1,5 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import './index.css'
+import './App.css'
 import App from './App.tsx'
 
 //import BrowserRouter dari react router
@@ -14,14 +16,21 @@ const queryClient = new QueryClient()
 //import AuthProvider
 import { AuthProvider } from './context/AuthContext';
 
+//import ToastProvider dan ToastContainer
+import { ToastProvider } from './context/ToastContext';
+import ToastContainer from './components/ToastContainer';
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <AuthProvider>
-      <BrowserRouter>
-        <QueryClientProvider client={queryClient}>
-          <App />
-        </QueryClientProvider>
-      </BrowserRouter>
+      <ToastProvider>
+        <BrowserRouter>
+          <QueryClientProvider client={queryClient}>
+            <App />
+            <ToastContainer />
+          </QueryClientProvider>
+        </BrowserRouter>
+      </ToastProvider>
     </AuthProvider>
   </StrictMode>,
 )
